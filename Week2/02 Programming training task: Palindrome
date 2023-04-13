@@ -1,0 +1,77 @@
+//*******************************************************************
+//*******************************************************************
+/*
+Тренировочное задание по программированию: Палиндром
+Напишите функцию, котораяназывается IsPalindrom
+возвращает bool принимает параметр типа string и возвращает, 
+является ли переданная строка палиндромом
+Палиндром - это слово или фраза, которые одинаково читаются слева направо 
+и справа налево.
+
+Аргумент функции	Результат
+madam					true
+gentleman				false
+X						true
+*/
+//*******************************************************************
+//*******************************************************************
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+//--------------------1-------------------------------
+bool IsPalindrom(string str) {
+	string temp = str;
+	reverse(str.begin(), str.end());
+	return (temp == str);
+}
+//----------------------------------------------------
+
+//--------------------2-------------------------------
+bool IsPalindrom2(string s) {
+	
+	for (size_t i = 0; i < s.size() / 2; ++i) {
+		if (s[i] != s[s.size() - i - 1]) {
+			return false;
+		}
+	}
+	return true;
+}
+//----------------------------------------------------
+
+//--------------------3-------------------------------
+bool IsPalindrom3(std::string str) {
+	std::string conversely(str.rbegin(), str.rend());
+
+	if (str == conversely)
+	{
+		return true;
+	}
+	return false;
+}
+//----------------------------------------------------
+
+int main() {
+	
+	string str1 = "madam";
+	string str2 = "gentleman";
+	string str3 = "X";
+
+	cout << "1------------------------------------------" << endl;
+	cout << std::boolalpha << IsPalindrom(str1) << endl;
+	cout << IsPalindrom(str2) << endl;
+	cout << IsPalindrom(str3) << endl;
+
+	cout << "2------------------------------------------" << endl;
+	cout << std::boolalpha << IsPalindrom2(str1) << endl;
+	cout << IsPalindrom2(str2) << endl;
+	cout << IsPalindrom2(str3) << endl;
+
+	cout << "3------------------------------------------" << endl;
+	cout << std::boolalpha << IsPalindrom3(str1) << endl;
+	cout << IsPalindrom3(str2) << endl;
+	cout << IsPalindrom3(str3) << endl;
+
+	return 0;
+}
