@@ -47,27 +47,27 @@ vector<string> PalindromFilter(vector<string> words, int minLength) {
 	return res;
 }
 
+void DisplayVector(vector<string> vec) {
+	for (auto str : vec) {
+		cout << str << " ";
+	}
+}
+
 int main() {
 	vector<string> test1 = { "abacaba", "aba" };
 	vector<string> test2 = { "abacaba", "aba" };
 	vector<string> test3 = { "weew", "bro", "code" };
 
 	vector<string> result = PalindromFilter(test1, 5);
-	for (auto i : result) {
-		cout << i << " ";
-	}
+	DisplayVector(result);
 	cout << endl;
 
 	result = PalindromFilter(test2, 2);
-	for (auto i : result) {
-		cout << i << " ";
-	}
+	DisplayVector(result);
 	cout << endl;
 
 	result = PalindromFilter(test3, 4);
-	for (auto i : result) {
-		cout << i << " ";
-	}
+	DisplayVector(result);
 	cout << endl;
 
 	return 0;
