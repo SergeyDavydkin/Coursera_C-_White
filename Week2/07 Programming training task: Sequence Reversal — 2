@@ -1,0 +1,53 @@
+//*******************************************************************
+//*******************************************************************
+/*
+Тренировочное задание по программированию: Разворот последовательности — 2
+Реализуйте функцию vector Reversed(const vector& v), возвращающую копию 
+вектора v, в которой числа переставлены в обратном порядке.
+
+Пример
+Вектор v			Результат функции
+1, 5, 3, 4, 2		2, 4, 3, 5, 1
+*/
+//*******************************************************************
+//*******************************************************************
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> Reversed(const vector<int>& v)
+{
+	vector<int> temp;
+	for (auto it = v.rbegin(); it != v.rend(); ++it)
+	{
+		temp.push_back(*it);
+	}	
+	return temp;
+}
+
+//vector<int> Reversed(const vector<int>& input)
+//{
+//	vector<int> result;
+//	for (int i = input.size() - 1; i >= 0; --i) {
+//		result.push_back(input[i]);
+//	}
+//	return result;
+//}
+
+void DisplayVector(vector<int> vec) {
+	for (auto str : vec) {
+		cout << str << " ";
+	}
+}
+
+int main() {
+
+	vector<int> numbers = { 1, 5, 3, 4, 2 };
+	DisplayVector(numbers);
+	cout << endl;
+
+	vector<int> revers = Reversed(numbers);
+	DisplayVector(revers);
+
+	return 0;
+}
