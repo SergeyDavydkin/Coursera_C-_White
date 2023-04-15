@@ -1,0 +1,65 @@
+//*******************************************************************
+//*******************************************************************
+/*
+Задание по программированию: Разворот последовательности
+Реализуйте функцию void Reverse(vector& v), которая переставляет элементы 
+вектора в обратном порядке.
+
+Пример
+vector<int> numbers = {1, 5, 3, 4, 2};
+Reverse(numbers);
+// numbers должен оказаться равен {2, 4, 3, 5, 1}
+*/
+//*******************************************************************
+//*******************************************************************
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void Reverse(vector<int>& v) {
+	vector<int> res;
+	for (int i = v.size() - 1; i >= 0; i--) {
+		res.push_back(v[i]);
+	}
+	v = res;
+}
+
+//void Reverse(vector<int>& v) {
+//	int n = v.size();  // для удобства сохраним размер вектора в переменную n
+//	for (int i = 0; i < n / 2; ++i) {
+//		// элемент с индексом i симметричен элементу с индексом n - 1 - i
+//		// поменяем их местами с помощью временной переменной tmp
+//		int tmp = v[i];
+//		v[i] = v[n - 1 - i];
+//		v[n - 1 - i] = tmp;
+//	}
+//}
+
+//void Reverse(std::vector<int>& input)
+//{
+//	std::vector<int> temp;
+//	for (auto it = input.rbegin(); it != input.rend(); ++it)
+//	{
+//		temp.push_back(*it);
+//	}
+//	input = temp;
+//}
+
+void DisplayVector(vector<int> vec) {
+	for (auto str : vec) {
+		cout << str << " ";
+	}
+}
+
+int main() {
+
+	vector<int> numbers = { 1, 5, 3, 4, 2 };
+	DisplayVector(numbers);
+	cout << endl;
+
+	Reverse(numbers);
+	DisplayVector(numbers);
+
+	return 0;
+}
