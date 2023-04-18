@@ -1,0 +1,54 @@
+//********************************************************************************
+//********************************************************************************
+/*
+Задание по программированию: Сортировка без учёта регистра
+Условие
+В стандартном потоке дана одна строка, состоящая из числа N и следующих за ним N 
+строк S. Между собой число и строки разделены пробелом.
+
+Отсортируйте строки S в лексикографическом порядке по возрастанию, игнорируя 
+регистр букв, и выведите их в стандартный поток вывода.
+
+Ограничения
+0 <= N <= 1000
+1 <= |S| <= 15
+Каждая строка S[i] может состоять из следующих символов: [0-9,a-z,A-Z]
+Примеры
+stdin		stdout
+2 q A		A q
+3 a C b		a b C
+Подсказка
+Обратите внимание на функцию tolower.
+
+*/
+//********************************************************************************
+//********************************************************************************
+
+#include <algorithm>
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+
+	int n = 0;
+	cin >> n;
+	vector<string> vec(n);
+
+	for (auto& wrd : vec) {
+		cin >> wrd;
+	}
+
+	auto compare_chare = [](const char lft, const char rht) {
+		return tolower(lft) < tolower(rht);
+	};
+
+	auto compare = [compare_chare](const string& lf, const string& rh) {
+		return lexicographical_compare(begin(lf), end(lf), begin(rh), end(rh), compare_chare);
+	};
+
+	sort(vec.begin(), vec.end(), compare);
+	copy(vec.begin(), vec.end(), ostream_iterator<string>(cout, " "));
+
+	return 0;
+}
