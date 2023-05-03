@@ -1,0 +1,123 @@
+//*************************************************************************************
+//*************************************************************************************
+/*
+Тренировочное задание по программированию: Список студентов
+Определите структуру "Студент" с полями имя, фамилия, дата, месяц и год рождения. 
+Создайте вектор из таких структур, заполните его из входных данных и затем по запросам 
+выведите нужные поля.
+
+Формат ввода
+Первая строка содержит одно целое число N от 0 до 10000 - число студентов.
+
+Далее идут N строк, каждая из которых содержит две строки длиной от 1 до 15 символов - 
+имя и фамилия очередного студента, и три целых числа от 0 до 1000000000 - день, месяц 
+и год рождения.
+
+Следующая строка содержит одно целое число M от 0 до 10000 - число запросов.
+
+Следующие M строк содержат строку длиной от 1 до 15 символов - запрос, и целое число 
+от 0 до 1000000000 - номер студента (нумерация начинается с 1).
+
+Формат вывода
+Для запроса вида "name K", где K от 1 до N, выведите через пробел имя и фамилию 
+K-го студента.
+
+Для запроса вида "date K", где K от 1 до N, выведите через точку число, месяц 
+и год рождения K-го студента.
+
+Для остальных запросов выведите "bad request".
+
+Пример ввода
+3
+Ivan Ivanov 1 1 1901
+Petr Petrox 2 2 1902
+Alexander Sidorov 3 3 1903
+3
+name 1
+date 3
+mark 5
+
+Пример вывода
+Ivan Ivanov
+3.3.1903
+bad request
+
+*/
+//*************************************************************************************
+//*************************************************************************************
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+struct Student {
+	string firstname;
+	string lastname;
+
+	int day;
+	int month;
+	int year;
+
+	Student(const string& f_name, const string& l_name,
+		const int new_day, const int new_month, const int new_year)
+		: firstname(f_name)
+		, lastname(l_name)
+		, day(new_day)
+		, month(new_month)
+		, year(new_year)
+	{}
+};
+
+int main() {
+
+	int number_students = 0;
+	cin >> number_students;
+
+	vector<Student> vec_stud;
+
+	for (int i = 0; i < number_students; i++) {
+		string fname;
+		cin >> fname;
+
+		string lname;
+		cin >> lname;
+
+		int day = 0;
+		cin >> day;
+
+		int month = 0;
+		cin >> month;
+
+		int year = 0;
+		cin >> year;
+
+		vec_stud.push_back({ fname, lname, day, month, year });
+	}
+
+	int num_requests = 0;
+	cin >> num_requests;
+
+	for (int i = 0; i < num_requests; i++) {
+		string query;
+		cin >> query;
+
+		size_t student_id = 0;
+		cin >> student_id;
+		--student_id;
+
+		if (query == "name" && student_id >= 0 && student_id < vec_stud.size()) {
+			cout << vec_stud[student_id].firstname << " ";
+			cout << vec_stud[student_id].lastname << endl;
+		}
+		else if (query == "date" && student_id >= 0 && student_id < vec_stud.size()) {
+			cout << vec_stud[student_id].day << ".";
+			cout << vec_stud[student_id].month << ".";
+			cout << vec_stud[student_id].year << endl;
+		}
+		else {
+			cout << "bad request" << endl;
+		}
+	}
+
+	return 0;
+}
