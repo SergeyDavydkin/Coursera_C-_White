@@ -1,0 +1,144 @@
+#include <iostream>
+#include <sstream>
+
+using namespace std;
+
+class Rational {
+public:
+	Rational()
+		: numerator_(0)
+		, denominator_(1)
+	{
+		// Реализуйте конструктор по умолчанию		
+	}
+
+	Rational(int numerator, int denominator) {
+		// Реализуйте конструктор
+		const int gcd_result = gcd(numerator, denominator);
+
+		// сократим дробь, разделив числитель и знаменатель на их НОД
+		numerator_ = numerator / gcd_result;
+		denominator_ = denominator / gcd_result;
+
+		// знаменатель должен быть положительным
+		if (denominator_ < 0) {
+			numerator_ = -numerator_;
+			denominator_ = -denominator_;
+		}
+	}
+
+	int Numerator() const {
+		return numerator_;
+	}
+
+	int Denominator() const	{
+		return denominator_;
+	}
+
+	// вычисления наибольшего общего делителя (НОД)
+	int gcd(int a, int b) {
+		return b ? gcd(b, a % b) : a;
+	}		
+
+private:
+	// Добавьте поля
+	int numerator_;
+	int denominator_;
+};
+
+// Вставьте сюда реализацию operator == для класса Rational из второй части
+// 
+// поскольку дроби сокращены, достаточно сравнить числители и знаменатели
+bool operator ==(const Rational& lhs, const Rational& rhs) {
+	return lhs.Numerator() == rhs.Numerator()
+		&& lhs.Denominator() == rhs.Denominator();
+}
+
+// используем обычную формулу сложения дробей, основанную на приведении слагаемых 
+// к общему знаменателю
+Rational operator +(const Rational& lhs, const Rational& rhs) {
+	return { lhs.Numerator() * rhs.Denominator() + rhs.Numerator() * lhs.Denominator(),
+		lhs.Denominator() * rhs.Denominator() };
+}
+
+// вычитание реализуется аналогично сложению
+Rational operator -(const Rational& lhs, const Rational& rhs) {
+	return { lhs.Numerator() * rhs.Denominator() - rhs.Numerator() * lhs.Denominator(),
+		lhs.Denominator() * rhs.Denominator() };
+}
+
+// Реализуйте для класса Rational операторы * и /
+
+// реализация умножения
+Rational operator *(const Rational& lhs, const Rational& rhs) {
+	return { lhs.Numerator() * rhs.Numerator(),
+		lhs.Denominator() * rhs.Denominator() };
+}
+
+// реализация деления
+Rational operator /(const Rational& lhs, const Rational& rhs) {	
+	return lhs * Rational(rhs.Denominator(), rhs.Numerator());
+}
+
+
+// Реализуйте для класса Rational операторы << и >>
+ostream& operator <<(ostream& os, const Rational& rat) {
+	return os << rat.Numerator() << '/' << rat.Denominator();
+}
+
+istream& operator >>(istream& is, Rational& rat) {
+	int num = 0;
+	int den = 0;
+	if (is >> num && is.ignore(1) && is >> den) {
+		rat = Rational(num, den);
+	}
+	return is;
+}
+
+int main()
+{
+	{
+		ostringstream output;
+		output << Rational(-6, 8);
+		if (output.str() != "-3/4")
+		{
+			cout << "Rational(-6, 8) should be written as \"-3/4\"" << endl;
+			return 1;
+		}
+	}
+
+	{
+		istringstream input("5/7");
+		Rational r;
+		input >> r;
+		bool equal = r == Rational(5, 7);
+		if (!equal)
+		{
+			cout << "5/7 is incorrectly read as " << r << endl;
+			return 2;
+		}
+	}
+
+	{
+		istringstream input("5/7 10/8");
+		Rational r1, r2;
+		input >> r1 >> r2;
+		bool correct = r1 == Rational(5, 7) && r2 == Rational(5, 4);
+		if (!correct)
+		{
+			cout << "Multiple values are read incorrectly: " << r1 << " " << r2 << endl;
+			return 3;
+		}
+
+		input >> r1;
+		input >> r2;
+		correct = r1 == Rational(5, 7) && r2 == Rational(5, 4);
+		if (!correct)
+		{
+			cout << "Read from empty stream shouldn't change arguments: " << r1 << " " << r2 << endl;
+			return 4;
+		}
+	}
+	cout << "OK" << endl;
+	return 0;
+}
